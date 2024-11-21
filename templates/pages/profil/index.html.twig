@@ -1,0 +1,59 @@
+{% extends 'pages/base.html.twig' %}
+
+{% block title %}
+	Blog - Page de profile
+{% endblock %}
+
+{% block body %}
+	<h1 class="text-indigo-700 text-5xl font-bold text-center">Page de profile</h1>
+	<section class="flex flex-col w-screen max-w-96 bg-neutral-100 p-4 m-auto my-4">
+		<p>Email:
+			{{app.user.email}}
+		</p>
+		<p>Username:
+			{{app.user.username}}
+		</p>
+	</section>
+	<section class="flex flex-col w-screen max-w-[500px] bg-neutral-100 p-8 m-auto my-4 rounded drop-shadow-md">
+		<h2 class="text-indigo-700 text-3xl font-bold text-center border-b-2 py-2 mb-8">Créer un article</h2>
+
+		{{form_start(articleForm, {"attr":{"class":'flex flex-col gap-4'}})}}
+
+		{{form_label(articleForm.titre)}}
+		{{form_widget(articleForm.titre, { attr: {class: 'p-2 rounded'} }) }}
+		<div class="text-red-400 text-md">
+			{{form_errors(articleForm.titre)}}
+		</div>
+
+		{{form_label(articleForm.contenu)}}
+		{{form_widget(articleForm.contenu, { attr: {class: 'p-2 rounded w-full'} }) }}
+		<div class="text-red-400 text-md">
+			{{form_errors(articleForm.contenu)}}
+		</div>
+
+		{{form_widget(articleForm.submit, 
+		{ attr: {class: 'bg-indigo-500 p-2 text-neutral-100 rounded hover:bg-indigo-400 transition'} }) }}
+
+
+		{% if message is defined %}
+			<p class="{{message.status == "success" ? "text-green-700" : "text-red-700" }} text-md">
+				{{message.content}}
+			</p>
+		{% endif %}
+
+		{{form_end(articleForm)}}
+	</section>
+
+	<section>
+		{% for article in articles %}
+			<div class="p-4 bg-neutral-100 flex flex-col justify-center m-4 rounded max-w-[500px] mx-auto">
+				<p  class="text-sm text-right opacity-85">{{ app.user.email}}</p>
+				<h3 class="text-4xl">{{article.titre}}</h3>
+				{% if article.contenu %}
+					<p>{{article.contenu}}</p>
+				{% endif %}
+				<p class="text-xs text-right opacity-85">{{article.date|date("m/d/Y - H:i")}}</p>
+			</div>
+		{% endfor %}
+	</section>
+{% endblock %}

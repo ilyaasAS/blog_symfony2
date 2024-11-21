@@ -1,0 +1,43 @@
+<nav class="navbar">
+	<div id="navbar-menu-button">
+		<svg width="32" height="32" viewbox="0 0 24 24" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="">
+			<line x1="4" x2="20" y1="12" y2="12"/>
+			<line x1="4" x2="20" y1="6" y2="6"/>
+			<line x1="4" x2="20" y1="18" y2="18"/>
+		</svg>
+	</div>
+
+	<ul id="navbar-menu" style="left:-100%">
+		<li>
+			<a href="/" class="text-lg hover:text-indigo-700">Accueil</a>
+		</li>
+
+		{% if app.user %}
+			<li>
+				<a href={{path('app_profil')}} class="text-lg hover:text-indigo-700">Profil</a>
+			</li>
+			<li>
+				<a href={{path('app_logout')}} class="text-lg hover:text-indigo-700">Se déconnecter</a>
+			</li>
+
+		{% else %}
+			<li>
+				<a href="/auth" class="text-lg hover:text-indigo-700">Authentification</a>
+			</li>
+		{% endif %}
+	</ul>
+</nav>
+
+<script>
+	// Navbar menu interaction
+const menuButton = document.querySelector('#navbar-menu-button');
+menuButton.addEventListener('click', () => {
+const menu = document.querySelector('#navbar-menu');
+
+if (menu.style.left == "0%") {
+menu.style.left = "-100%";
+} else {
+menu.style.left = "0%";
+}
+})
+</script>
